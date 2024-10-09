@@ -66,7 +66,7 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col items-center bg-black bg-gray-900 text-white h-screen-full p-8">
-      <h1 className="text-4xl font-bold mb-6">Welcome to the Quiz App</h1>
+      <h1 className="text-4xl font-bold mb-6">One Stop Solution for Your Placement Needs.</h1>
       
       {error && <div className="mb-4 text-red-500">{error}</div>} {/* Display error message */}
       
