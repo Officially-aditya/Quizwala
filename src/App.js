@@ -8,19 +8,19 @@ import Results from './components/Results';
 import QuizDescription from './components/QuizDescription';
 import QuestionDisplay from './components/QuestionDisplay';
 import Header from './components/Header';
+import SignUp from './components/SignUp';
 import './index.css';
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [quizResults, setQuizResults] = useState([]);
-  const [questions, setQuestions] = useState([]);
+  const [quizResults, setQuizResults] = useState([]); // Changed to an array
 
   const handleLogin = (username) => {
     setUser({ username });
   };
 
-  const handleQuizResults = (score) => {
-    setQuizResults([...quizResults, score]);
+  const handleQuizResults = (result) => {
+    setQuizResults((prevResults) => [...prevResults, result]); 
   };
 
   return (
@@ -30,20 +30,24 @@ const App = () => {
         <Route path="/" element={<HomePageWithNavigate />} />
         <Route path="/profile" element={user ? <Profile user={user} /> : <Login onLogin={handleLogin} />} />
         <Route path="/dashboard" element={<Dashboard results={quizResults} />} />
-        <Route path="/results" element={<Results score={55} />} />
-        <Route path="/quiz-description" element={<QuizDescription description="This is a sample quiz." onStartQuiz={() => {/* Start quiz logic */}} />} />
-        <Route path="/quiz" element={<QuestionDisplay questions={questions} />} />
+        <Route path="/results" element={<Results onFinish={handleQuizResults} />} />
+        <Route path="/quiz-description" element={<QuizDescription />} />
+        <Route path="/quiz" element={<QuestionDisplay onFinish={handleQuizResults} />} />
+        <Route path="/signup" element={<SignUp signup={true} />} />
       </Routes>
     </Router>
   );
 };
 
-// Separate component to handle navigation
 const HomePageWithNavigate = () => {
-  const navigate = useNavigate(); // Call useNavigate here
+  const navigate = useNavigate(); 
+
+  const handleStartQuiz = (questions, timeLimit) => {
+      navigate('/quiz-description', { state: { questions, timeLimit } });
+  };
 
   return (
-    <HomePage onStartQuiz={() => navigate('/quiz-description')} />
+      <HomePage onStartQuiz={handleStartQuiz} />
   );
 };
 
