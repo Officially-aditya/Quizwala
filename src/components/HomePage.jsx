@@ -109,7 +109,7 @@ const HomePage = () => {
             <input
               type="number"
               value={timeLimit}
-              onChange={e => setTimeLimit(Math.max(10, e.target.value))}
+              onChange={e => setTimeLimit(Math.max(1, e.target.value))}
               min="10"
               className="ml-2 p-1 border border-gray-600 rounded text-white bg-gray-700"
             />
